@@ -10,17 +10,17 @@ def Complete(path=None, title=None, center=True, updatelabel=None):
         updatelabel.config(text="Need Title")
         return
     updatelabel.config(text="Submitted Successfully")
-    title  = '_'.join(title.strip().split())
+    title  = '_'.join(title.lower().strip().split())
     create_file(path, title, center)
 
 def create_file(path, title, center):
     path = os.path.join(path, f'{title}.py')
     with open(path, 'w') as file:
-        # Write some content to the file (optional)
         file.write("import tkinter as tk\nfrom tkinter import ttk\n\n# Setup\n")
         file.write("window = tk.Tk()\n")
-        if center is None:
-            pass
+        if center is False:
+            file.write("window_width = window.winfo_reqwidth()\n")
+            file.write("window_height = window.winfo_reqheight()\n")
         else:
             file.write("screen_width = window.winfo_screenwidth()\n")
             file.write("screen_height = window.winfo_screenheight()\n")
@@ -29,7 +29,7 @@ def create_file(path, title, center):
             file.write("x = (screen_width - window_width) // 2\n")
             file.write("y = (screen_height - window_height) // 2\n")
         file.write(f"window.title('{title}')\n")
-        if center is None:
+        if center is False:
             file.write("window.geometry(f'{window_width}x{window_height}')\n")
         else:
             file.write("window.geometry(f'{window_width}x{window_height}+{x}+{y}')\n")
@@ -55,13 +55,13 @@ window.resizable(False, False)
 label = ttk.Label(window, text="Tkinter App Creator!", font=("Arial", 18))
 label.grid(row=0, column=0, columnspan=2, padx=10, pady=10)
 
-pathvar = tk.StringVar(value="")
+pathvar = tk.StringVar(value=r'C:\Users\micha\OneDrive\Pictures\Documents\VSCode Files\KindlingProjects\tkinter-Atlas')
 path_label = ttk.Label(window, text="Path", font=("Arial", 12))
 path_entry = ttk.Entry(window, width=20, textvariable=pathvar)
 path_label.grid(row=1, column=0, padx=10, pady=(5,2))
 path_entry.grid(row=1, column=1, padx=10)
 
-titlevar = tk.StringVar(value=" ")
+titlevar = tk.StringVar(value="")
 title_label = ttk.Label(window, text="Title",font=("Arial", 12))
 title_entry = ttk.Entry(window, width=20, textvariable=titlevar)
 title_label.grid(row=2, column=0, padx=10, pady=(5,2))
@@ -78,6 +78,7 @@ complete_button.grid(row=3, column=1, padx=10, pady=10)
 
 
 # Run
+title_entry.bind('<Return>', lambda event: complete_button.invoke())
 title_entry.focus_force()
 window.wm_attributes("-topmost", 1)
 window.mainloop()
