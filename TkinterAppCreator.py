@@ -85,7 +85,7 @@ def create_file(path, title, center, size_tuple):
             file.write("screen_width = window.winfo_screenwidth()\n")
             file.write("screen_height = window.winfo_screenheight()\n")
             file.write("x = (screen_width - window_width) // 2\n")
-            file.write("y = (screen_height - window_height) // 2\n")
+            file.write("y = (screen_height - window_height) // 5\n")
         file.write(f"window.title('{title}')\n")
         if center is False:
             file.write("window.geometry(f'{window_width}x{window_height}')\n")
