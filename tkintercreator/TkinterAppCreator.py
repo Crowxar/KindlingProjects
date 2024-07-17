@@ -66,7 +66,9 @@ def Complete(path=None, title=None, center=True, size=None, updatelabel=None):
 def create_file(path, title, center, size_tuple):
     path = os.path.join(path, f"{title}.py")
     with open(path, "w") as file:
-        file.write("import tkinter as tk\nfrom tkinter import ttk\n\n# Setup\n")
+        file.write(
+            "import tkinter as tk\nfrom tkinter import ttk\nimport os\n\n#region ===Functions===\n\n\n#endregion\n\n#region ===Setup===\n"
+        )
         file.write("window = tk.Tk()\n")
         if center is False:
             if size_tuple:
@@ -91,9 +93,9 @@ def create_file(path, title, center, size_tuple):
             file.write("window.geometry(f'{window_width}x{window_height}')\n")
         else:
             file.write("window.geometry(f'{window_width}x{window_height}+{x}+{y}')\n")
-        file.write("window.resizable(False, False)\n\n# Widgets\n\n\n# Run\n")
+        file.write("window.resizable(False, False)\n\n#endregion\n\n#region ===Widgets===\n\n\n#endregion\n\n#region ===Run===\n")
         file.write(
-            "window.focus_force()\nwindow.wm_attributes('-topmost', 1)\nwindow.mainloop()"
+            "window.focus_force()\nwindow.wm_attributes('-topmost', 1)\nwindow.mainloop()\nos.system('cls')\n#endregion\n"
         )
     window.destroy()
 
